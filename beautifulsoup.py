@@ -1,4 +1,5 @@
 from cgitb import text
+from optparse import Values
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
@@ -62,6 +63,17 @@ for item in soup.findAll('img', alt= "Foto"): # puxando apenas os links das imag
     print(item.get('src'))
 
 soup.find_all(text = True)
-soup.find('h1')
+
+soup.findAll('h1')  #  se colocar o .find_parents() ira dar erro, então se usa o 'for'
+for item in soup.findAll('h1'):
+    print(item.find_parent('div'))
+
 soup.find('p').find_parent('div')
 soup.find('p').find_parents()
+
+# Siblings (seria como se fosse o 'irmão', dentro da msm div por exemplo)
+soup.find('h1').findNextSibling() # encontra a próxima tag depois do 'h1'
+
+soup.find('h1').findPreviousSibling()
+for item in soup.find('h1').findPreviousSibling():
+    print(item)
