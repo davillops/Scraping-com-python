@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+import pandas as pd
 
 url = 'https://alura-site-scraping.herokuapp.com/index.php'
 resp = urlopen(url)
@@ -32,8 +33,43 @@ infos = anuncio.find('div', {'class':'body-card'}).findAll('p')
 for info in infos:
     card[info.get('class')[0].split('-')[-1]] = info.get_text()
 
+anuncio.find('ul', {'class':'lst-items'}).findAll('li')
+items = anuncio.find('ul', {'class':'lst-items'}).findAll('li')
+items.pop() # removo o ultimo item da lista
+for item in items:
+    print(item.getText())
+for item in items:
+    print(item.getText().replace('►', ''))
+
+acessorios = []
+
+for item in items:
+    acessorios.append(item.getText().replace('►', '')) # append, cria a lista e joga p dentro os dados
+card['items'] = acessorios
+
+dataset = pd.DataFrame(card)
+dataset = pd.DataFrame.from_dict(card, orient= 'index') # ajustando para o dataframe ficar correto
+dataset
+
+dataset = pd.DataFrame.from_dict(card, orient= 'index').T # voltar ao normal
+dataset
+# T -> transpor ou seja de linha para coluna ou ao contrario
+# criando arquivo csv
+dataset.to_csv('.\dataSet.csv', sep=';', index=False, encoding='utf-8-sig')
+
+
+
+
+
+
+
 # RESUMO
 # card['value'] = anuncio.find('p', {"class":"txt-value"}).get_text()
 # infos = anuncio.find('div', {'class':'body-card'}).findAll('p')
 # for info in infos:
 #   card[info.get('class')[0].split('-')[-1]] = info.get_text()
+# items = anuncio.find('ul', {'class':'lst-items'}).findAll('li')
+# items.pop()
+# for item in items:
+#   acessorios.append(item.getText().replace('►', ''))
+# card['items'] = acessorios
