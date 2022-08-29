@@ -1,3 +1,4 @@
+from urllib.request import urlretrieve
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -56,20 +57,41 @@ dataset
 # T -> transpor ou seja de linha para coluna ou ao contrario
 # criando arquivo csv
 dataset.to_csv('.\dataSet.csv', sep=';', index=False, encoding='utf-8-sig')
+anuncio.find("div", {"class":"imagem-card"})
+image = anuncio.find('div', {'class':'image-card'}).find('img')
+image.get('src')
+print(image.get('src'))
+image.get('src').split('/')[-1]
+urlretrieve(image.get('src'), './imagens/' + image.get('src').split('/')[-1])
 
+# GERAL #
 
+len(sopinha.find('div', {'id':'container-cards'}).findAll('div', class_="card"))
+# len = contar quantos itens tem na lista, ou seja quantas 'div'
+sopinha.find('div', {'id':'container-cards'}).find_all('div', class_='card')
+anuncios = sopinha.find('div', {'id':'container-cards'}).findAll('div', class_='card')
 
+# for ITEM IN ITENS
 
+for anuncio in anuncios:
+    print(str(anuncio)+"\n\n") # \n significa espaço (pular)
 
+# Valor
+card['value'] = anuncio.find('p', {"class":"txt-value"}).get_text()
 
+# Informações
+infos = anuncio.find('div', {'class':'body-card'}).findAll('p')
+for info in infos:
+  card[info.get('class')[0].split('-')[-1]] = info.get_text()
 
-# RESUMO
-# card['value'] = anuncio.find('p', {"class":"txt-value"}).get_text()
-# infos = anuncio.find('div', {'class':'body-card'}).findAll('p')
-# for info in infos:
-#   card[info.get('class')[0].split('-')[-1]] = info.get_text()
-# items = anuncio.find('ul', {'class':'lst-items'}).findAll('li')
-# items.pop()
-# for item in items:
-#   acessorios.append(item.getText().replace('►', ''))
-# card['items'] = acessorios
+# Acessorios
+items = anuncio.find('ul', {'class':'lst-items'}).findAll('li')
+items.pop()
+acessorios = []
+for item in items:
+  acessorios.append(item.getText().replace('►', ''))
+card['items'] = acessorios
+
+# Imagens
+image = anuncio.find('div', {'class':'image-card'}).find('img')
+urlretrieve(image.get('src'), './imagens/' + image.get('src').split('/')[-1])
