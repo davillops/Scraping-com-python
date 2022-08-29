@@ -3,7 +3,6 @@ from email import header
 from urllib import response
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
-from wsgiref import headers
 
 url = 'https://www.alura.com.br'
 
