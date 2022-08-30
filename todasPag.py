@@ -9,11 +9,12 @@ cards = []
 response = urlopen('https://alura-site-scraping.herokuapp.com/index.php?page=')
 codigo = response.read().decode('utf-8')
 soup = BeautifulSoup(codigo, 'html.parser')
+
 pages = int(soup.find('span', class_='info-pages').get_text().split()[-1])
 ## Iterando por todas as páginas do site
 for i in range(pages):
     ## Obtendo o HTML
-    response = urlopen('https://alura-site-scraping.herokuapp.com/index.php?page=' + str(i + 1))
+    response = urlopen('https://alura-site-scraping.herokuapp.com/index.php?page=' + str(i + 1)) # +1 porque o indice começa no zero
     codigo = response.read().decode('utf-8')
     soup = BeautifulSoup(codigo, 'html.parser')
 
@@ -28,7 +29,6 @@ for i in range(pages):
         infos = anuncio.find('div', {'class':'body-card'}).findAll('p')
         for info in infos:
             card[info.get('class')[0].split('-')[-1]] = info.get_text()
-        
         
         items = anuncio.find('ul', {'class':'lst-items'}).findAll('li')
         items.pop()

@@ -1,5 +1,3 @@
-from cgitb import html
-from email import header
 from urllib import response
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
