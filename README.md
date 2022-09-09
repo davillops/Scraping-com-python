@@ -1,2 +1,0 @@
-# Python
- Iniciando com Python

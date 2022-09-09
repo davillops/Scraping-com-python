@@ -57,7 +57,9 @@ dataset
 # T -> transpor ou seja de linha para coluna ou ao contrario
 # criando arquivo csv
 dataset.to_csv('.\dataSet.csv', sep=';', index=False, encoding='utf-8-sig')
+
 anuncio.find("div", {"class":"imagem-card"})
+
 image = anuncio.find('div', {'class':'image-card'}).find('img')
 image.get('src')
 print(image.get('src'))
